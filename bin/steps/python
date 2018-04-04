@@ -46,7 +46,7 @@ if [ ! "$SKIP_INSTALL" ]; then
 fi
 
 # If Pip isn't up to date:
-if [ "$FRESH_PYTHON" ] || [[ ! $(pip --version) == *$PIP_VERSION* ]]; then
+#if [ "$FRESH_PYTHON" ] || [[ ! $(pip --version) == *$PIP_VERSION* ]]; then
   WORKING_DIR=$(pwd)
 
   bpwatch start prepare_environment
@@ -59,7 +59,7 @@ if [ "$FRESH_PYTHON" ] || [[ ! $(pip --version) == *$PIP_VERSION* ]]; then
     puts-step "Installing Setuptools ($SETUPTOOLS_VERSION)"
     tar zxf $ROOT_DIR/vendor/setuptools-$SETUPTOOLS_VERSION.tar.gz -C $TMPTARDIR
     cd $TMPTARDIR/setuptools-$SETUPTOOLS_VERSION/
-    python setup.py install &> /dev/null
+    python setup.py install
     cd $WORKING_DIR
   bpwatch stop install_setuptoools
 
@@ -72,7 +72,7 @@ if [ "$FRESH_PYTHON" ] || [[ ! $(pip --version) == *$PIP_VERSION* ]]; then
 
   bpwatch stop install_pip
   bpwatch stop prepare_environment
-fi
+#fi
 
 set -e
 hash -r
