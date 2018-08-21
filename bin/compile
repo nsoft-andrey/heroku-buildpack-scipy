@@ -165,6 +165,11 @@ source $BIN_DIR/steps/mercurial
 # Pylibmc support.
 source $BIN_DIR/steps/pylibmc
 
+# GDAL support.
+# This is part of the Geo support.
+# shellcheck source=bin/steps/gdal
+source "$BIN_DIR/steps/gdal"
+
 # Libffi support.
 source $BIN_DIR/steps/cryptography
 
