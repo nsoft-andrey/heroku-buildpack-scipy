@@ -47,31 +47,16 @@ fi
 
 # If Pip isn't up to date:
 if [ "$FRESH_PYTHON" ] || [[ ! $(pip --version) == *$PIP_VERSION* ]]; then
-  WORKING_DIR=$(pwd)
 
-  bpwatch start prepare_environment
+  puts-step "Installing pip"
 
-  TMPTARDIR=$(mktemp -d)
-  trap "rm -rf $TMPTARDIR" RETURN
+  # Remove old installations.
+  rm -fr /app/.heroku/python/lib/python*/site-packages/pip-*
+  rm -fr /app/.heroku/python/lib/python*/site-packages/setuptools-*
 
-  bpwatch start install_setuptools
-    # Prepare it for the real world
-    puts-step "Installing Setuptools ($SETUPTOOLS_VERSION)"
-    tar zxf $ROOT_DIR/vendor/setuptools-$SETUPTOOLS_VERSION.tar.gz -C $TMPTARDIR
-    cd $TMPTARDIR/setuptools-$SETUPTOOLS_VERSION/
-    /app/.heroku/python/bin/python setup.py install
-    cd $WORKING_DIR
-  bpwatch stop install_setuptoools
+  /app/.heroku/python/bin/python "$ROOT_DIR/vendor/get-pip.py" pip=="$PIP_VERSION" &> /dev/null
+  /app/.heroku/python/bin/pip install "$ROOT_DIR/vendor/setuptools-39.0.1-py2.py3-none-any.whl" &> /dev/null
 
-  bpwatch start install_pip
-    puts-step "Installing Pip ($PIP_VERSION)"
-    tar zxf $ROOT_DIR/vendor/pip-$PIP_VERSION.tar.gz -C $TMPTARDIR
-    cd $TMPTARDIR/pip-$PIP_VERSION/
-    /app/.heroku/python/bin/python setup.py install
-    cd $WORKING_DIR
-
-  bpwatch stop install_pip
-  bpwatch stop prepare_environment
 fi
 
 set -e
