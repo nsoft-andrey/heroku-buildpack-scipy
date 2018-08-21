@@ -32,7 +32,7 @@ WEBCONCURRENCY_PROFILE_PATH="$BUILD_DIR/.profile.d/python.webconcurrency.sh"
 DEFAULT_PYTHON_VERSION="python-2.7.15"
 DEFAULT_PYTHON_STACK="heroku-16"
 PYTHON_EXE="/app/.heroku/python/bin/python"
-PIP_VERSION="9.0.3"
+PIP_VERSION="6.0.7"
 SETUPTOOLS_VERSION="19.3"
 
 # Setup bpwatch
